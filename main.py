@@ -227,6 +227,7 @@ if __name__ == '__main__':
     # g_search_phrase = "Biden"
     # g_number_of_months = "1"
     # g_category_section = "Article"
+    header = ["date", "title", "description", "image_filename", "phrase_occurrence", "money_value_occurrence"]
     g_url = "https://www.nytimes.com"
     input_vars = Utils.get_input_vars()
     g_search_phrase = input_vars.get("g_search_phrase", "")

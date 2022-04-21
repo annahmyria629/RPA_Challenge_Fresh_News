@@ -5,8 +5,8 @@ import pathlib
 from RPA.Robocorp.WorkItems import WorkItems
 import logging
 
-class Utils:
 
+class Utils:
     @staticmethod
     def save_image(image_src, image_filename, folder_to_save):
         path_to_saved_image = str(pathlib.Path(folder_to_save).joinpath(image_filename).resolve())
@@ -29,6 +29,7 @@ class Utils:
             writer.writerow(headers)
             for item in data:
                 writer.writerow(item)
+            Utils.create_output_work_item(f.name)
 
     @staticmethod
     def get_image_name(src):
@@ -52,4 +53,9 @@ class Utils:
         items = WorkItems()
         items.get_input_work_item()
         variables = items.get_work_item_variables()
-        return variables.items()
+        return variables
+
+    @staticmethod
+    def create_output_work_item(output):
+        item = WorkItems()
+        output_item = item.create_output_work_item(files=output, save=True)
