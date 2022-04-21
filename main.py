@@ -16,8 +16,8 @@ class Scrapper:
 
     def open_browser(self, url: str) -> None:
         try:
-            # self.browser.open_available_browser(url)
-            self.browser.open_headless_chrome_browser(url)
+            self.browser.open_available_browser(url)
+            # self.browser.open_headless_chrome_browser(url)
             # self.browser.open_browser(url=url, browser="safari")
             self.browser.maximize_browser_window()
         except Exception:
