@@ -178,7 +178,6 @@ class Scrapper:
             print(type(e))
             print(str(e))
 
-
         self.browser.set_selenium_implicit_wait(value=timedelta(seconds=10))
         res_count = len(self.browser.get_webelements(locator="//ol[@data-testid='search-results']/li["
                                                              "@data-testid='search-bodega-result']"))

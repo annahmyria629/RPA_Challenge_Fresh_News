@@ -58,4 +58,5 @@ class Utils:
     @staticmethod
     def create_output_work_item(output):
         item = WorkItems()
-        output_item = item.create_output_work_item(files=output, save=True)
+        input_item = item.get_input_work_item()
+        output_item = input_item.create_output_work_item(files=output, save=True)
