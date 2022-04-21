@@ -168,12 +168,14 @@ class Scrapper:
             return ""
 
     def get_results(self, search_phrase: str, folder_to_save_images: str) -> typing.List:
+        print("Start of getting results")
         result_data = []
         paging_button = "//button[@data-testid='search-show-more-button']"
         try:
             while self.browser.does_page_contain_button(locator=paging_button):
                 self.browser.scroll_element_into_view(locator=paging_button)
                 self.browser.click_button(locator=paging_button)
+                print("Click")
         except Exception as e:
             print(type(e))
             print(str(e))
@@ -263,7 +265,7 @@ if __name__ == '__main__':
         browser.sort_news_by_newest()
         results = browser.get_results(g_search_phrase, images_folder)
         Utils.write_result_to_file(pathlib.Path(output_folder).joinpath("result.csv"), results, header)
-        print("End")
+        print("End of execution")
     except (se.ElementNotFound, AssertionError) as e:
         print(str(e))
     except Exception as e:
