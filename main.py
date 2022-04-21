@@ -10,15 +10,11 @@ import pathlib
 class Scrapper:
     def __init__(self) -> None:
         self.browser = Selenium()
-        # self.browser.set_selenium_speed(value=timedelta(seconds=1))
-        a = timedelta(seconds=5)
         self.browser.set_selenium_timeout(value=timedelta(seconds=5))
 
     def open_browser(self, url: str) -> None:
         try:
             self.browser.open_available_browser(url)
-            # self.browser.open_headless_chrome_browser(url)
-            # self.browser.open_browser(url=url, browser="safari")
             self.browser.maximize_browser_window()
         except Exception:
             print("Unable to open to browser and go to url")
@@ -38,12 +34,6 @@ class Scrapper:
             self.browser.input_text(locator=search_input_field, text=phase)
             self.browser.press_keys(search_input_field, "ENTER")
             self.browser.wait_until_page_contains(text="Date Range", error="Page with search results was not loaded")
-            # try:
-            #     self.browser.select_frame("3pCheckIframeId")
-            #     self.browser.unselect_frame()
-            #     self.browser.wait_until_page_contains("Date Range", timeout=timedelta(seconds=20), error="no")
-            # except Exception as e:
-            #     pass
         except s.WebDriverException:
             raise Exception("Something goes wrong")
 
@@ -66,21 +56,11 @@ class Scrapper:
             self.browser.input_text(locator=date_end_input_field, text=date_of_end)
             self.browser.input_text(locator=date_start_input_field, text=date_of_start)
         self.browser.click_button_when_visible(locator=date_button)
-        # self.browser.set_selenium_implicit_wait(value=timedelta(seconds=5))
-        # # self.browser.wait_until_element_is_enabled()
-        # date_range_span = "//button[@data-testid='search-date-dropdown-a']/label/span[2]/span[1][@text='Date Range: ']"
-        # date_range_label = "//button[@facet-name='date']/label"
-        # self.browser.wait_until_page_contains_element(locator=date_range_span, error="Date was not set")
-        # date_range_label_text = self.browser.get_text(locator=date_range_label)
-        # if f"Date Range: {date_of_start}–{date_of_end}" not in date_range_label_text:
-        #     raise AssertionError("Date range was not set correctly")
 
     def set_news_section(self, category_section: str) -> bool:
         print("Start of setting section filter")
         section_button = "//div[@data-testid='section']/button[@data-testid='search-multiselect-button']"
         self.browser.click_button_when_visible(locator=section_button)
-        print("click on button")
-        # sections = browser_lib.get_webelements(locator="//ul[@data-testid='multi-select-dropdown-list']/li")
         sections_list_locator = "//*[@data-testid='section']//li"
         self.browser.wait_until_page_contains_element(locator=sections_list_locator,
                                                       error="Sections dropdown in not visible")
@@ -88,61 +68,22 @@ class Scrapper:
                                   f"'{category_section}')]"
         if self.browser.does_page_contain_element(section_locator):
             self.browser.click_element(section_locator)
-            print("section_locator")
             self.browser.click_element(locator=section_button)
         else:
             section_locator_alt = f"//button[contains(@value, '{category_section}')]"
             if self.browser.does_page_contain_button(section_locator_alt):
                 self.browser.click_button(locator=section_locator_alt)
-                print("section_locator_alt")
             else:
                 print("No such section")
         print("End of setting section filter")
-
-        # print("wait until")
-        # sections_list = self.browser.get_webelements(locator=sections_list_locator)
-        # # if self.browser.does_page_contain_element(sections):
-        # print("list  ")
-        # try:
-        #     sections_list_items = [re.sub("\W?\d", "", str(item.text)) for item in sections_list]
-        # except Exception as e:
-        #     t = type(e)
-        #     a = e
-        #     sections_list_items = [re.sub("\W?\d", "", str(item.text)) for item in sections_list]
-        # print("list was formed")
-        # if category_section in sections_list_items:
-        #     print("Such section exists")
-        #     section_locator = f"//input[@data-testid='DropdownLabelCheckbox' and contains(@value, " \
-        #                       f"'{category_section}')]"
-        #     if self.browser.does_page_contain_element(section_locator):
-        #         self.browser.click_element(section_locator)
-        #         print("section_locator")
-        #         self.browser.click_element(locator=section_button)
-        #     else:
-        #         section_locator_alt = f"//button[contains(@value, '{category_section}')]"
-        #         if self.browser.does_page_contain_button(section_locator_alt):
-        #             self.browser.click_button(locator=section_locator_alt)
-        #             print("section_locator_alt")
-        #         else:
-        #             print("Unable to set section filter")
-        # else:
-        #     print("no such section")
-        # print("End of setting section filter")
 
     def set_news_category(self, category_section):
         print("Start of setting category filter")
         type_button = "//div[@data-testid='type']/button[@data-testid='search-multiselect-button']"
         self.browser.click_button_when_visible(locator=type_button)
-        # types = browser_lib.get_webelements(locator="//ul[@data-testid='multi-select-dropdown-list']/li")
         types_list_locator = "//*[@data-testid='type']//li"
         self.browser.wait_until_page_contains_element(locator=types_list_locator,
                                                       error="Categories dropdown in not visible")
-        # types_list = self.browser.get_webelements(locator="//*[@data-testid='type']//li")
-        # self.browser.set_selenium_implicit_wait(value=timedelta(seconds=2))
-        # types_list_items = [re.sub("\W?\d", "", str(item.text)).lower() for item in types_list]
-        # self.browser.set_selenium_speed(value=timedelta(seconds=0))
-        # if category_section.lower() in types_list_items:
-        #     print("Its a type")
         type_locator = f"//input[@data-testid='DropdownLabelCheckbox' and " \
                        f"@value='{category_section.replace(' ', '').lower()}']"
         if self.browser.does_page_contain_element(type_locator):
@@ -153,8 +94,7 @@ class Scrapper:
             if self.browser.does_page_contain_element(type_locator_alt):
                 self.browser.click_element(type_locator_alt)
             else:
-                # self.browser.click_button_when_visible(locator=type_button)
-                print("no such category")
+                print("No such category")
         print("End of setting category filter")
 
     def sort_news_by_newest(self):
@@ -172,29 +112,16 @@ class Scrapper:
         print("Start of getting results")
         result_data = []
         paging_button = "//button[@data-testid='search-show-more-button']"
-        try:
-            while self.browser.does_page_contain_button(locator=paging_button):
+        while self.browser.does_page_contain_button(locator=paging_button):
+            try:
                 self.browser.scroll_element_into_view(locator=paging_button)
-                print("Scrolled into")
                 self.browser.wait_until_element_is_visible(locator=paging_button,
                                                            error="Show more button is not visible")
-                print("Visible")
                 self.browser.wait_until_page_contains_element(locator=paging_button)
-                print("Wait")
                 print(self.browser.does_page_contain_button(locator=paging_button))
-
-                v = self.browser.get_webelement(locator=paging_button)
-                print(v.tag_name)
-                a = "css:button[data-testid='search-show-more-button']"
-                try:
-                    self.browser.click_element(locator=paging_button)
-                except s.ElementClickInterceptedException as e:
-                    self.browser.click_element(locator=paging_button)
-                # self.browser.execute_javascript("document.querySelector(\"button[data-testid"
-                #                                 "='search-show-more-button']\").click()")
-                print("Click")
-        except s.ElementClickInterceptedException as e:
-            pass
+                self.browser.click_element_if_visible(locator=paging_button)
+            except s.ElementClickInterceptedException as e:
+                print(str(e))
 
         self.browser.set_selenium_implicit_wait(value=timedelta(seconds=10))
         res_count = len(self.browser.get_webelements(locator="//ol[@data-testid='search-results']/li["
@@ -211,9 +138,6 @@ class Scrapper:
                                       f"[{i + 1}]//a/p"
                 image_locator = f"//ol[@data-testid='search-results']/li[@data-testid='search-bodega-result']" \
                                 f"[{i + 1}]//img"
-                # date = self.browser.get_webelement(locator=date_locator)
-                # title = self.browser.get_webelement(locator=title_locator)
-                # description = self.browser.get_webelement(locator=description_locator)
                 date = self.get_web_element_text(date_locator)
                 title = self.get_web_element_text(title_locator)
                 description = self.get_web_element_text(description_locator)
@@ -246,9 +170,7 @@ class Scrapper:
 
 
 if __name__ == '__main__':
-    # g_search_phrase = "Biden"
-    # g_number_of_months = "1"
-    # g_category_section = "Article"
+    print("Start of execution")
     header = ["date", "title", "description", "image_filename", "phrase_occurrence", "money_value_occurrence"]
     g_url = "https://www.nytimes.com"
     input_vars = Utils.get_input_vars()
@@ -269,7 +191,6 @@ if __name__ == '__main__':
     g_number_of_months = int(g_number_of_months)
 
     output_folder = Utils.create_folder(pathlib.Path(__file__).parent.resolve(), "output")
-    images_folder = Utils.create_folder(output_folder, "images")
 
     browser = Scrapper()
     browser.open_browser(g_url)
@@ -279,7 +200,7 @@ if __name__ == '__main__':
         browser.set_news_section(g_category_section)
         browser.set_news_category(g_category_section)
         browser.sort_news_by_newest()
-        results = browser.get_results(g_search_phrase, images_folder)
+        results = browser.get_results(g_search_phrase, output_folder)
         Utils.write_result_to_file(pathlib.Path(output_folder).joinpath("result.csv"), results, header)
         print("End of execution")
     except (se.ElementNotFound, AssertionError) as e:
