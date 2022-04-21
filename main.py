@@ -1,18 +1,7 @@
-import time
-
-g_search_phrase = "Biden"
-g_category_section = "Article"
-g_number_of_months = 1
-
-g_url = "https://www.nytimes.com"
-
-header = ["date", "title", "description", "image_filename", "phrase_occurrence", "money_value_occurrence"]
-
 from RPA.Browser.Selenium import Selenium
 from datetime import timedelta, datetime
 import selenium.common.exceptions as s
 import SeleniumLibrary.errors as se
-import re
 from utils import Utils
 import pathlib
 from shutil import rmtree
@@ -235,6 +224,11 @@ class Scrapper:
 
 
 if __name__ == '__main__':
+    g_search_phrase = "Biden"
+    g_number_of_months = 1
+    g_category_section = "Article"
+    g_url = "https://www.nytimes.com"
+    Utils.get_input_vars()
     p = pathlib.Path(pathlib.Path(__file__).parent).glob('**/*')
     files = [x for x in p if x.is_file()]
     print(files)

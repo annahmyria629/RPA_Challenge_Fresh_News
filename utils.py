@@ -2,7 +2,8 @@ import requests
 import csv
 import re
 import pathlib
-
+from RPA.Robocorp.WorkItems import WorkItems
+import logging
 
 class Utils:
 
@@ -23,10 +24,6 @@ class Utils:
 
     @staticmethod
     def write_result_to_file(data, headers):
-
-
-        # header = ["date", "title", "description", "image_filename", "phrase_occurrence", "money_value_occurrence"]
-
         with open('result.csv', 'w', encoding='UTF8') as f:
             writer = csv.writer(f)
             writer.writerow(headers)
@@ -49,3 +46,11 @@ class Utils:
     def check_text_on_money_occurrence(input_str):
         regex = r"(\$\d+(?:\,?\d+)*(?:\.?\d+))|(\d+\s*dollar(?:s)?)|(\d+\s*USD)"
         return True if re.search(regex, input_str) is not None else False
+
+    @staticmethod
+    def get_input_vars():
+        items = WorkItems()
+        items.get_input_work_item()
+        variables = items.get_work_item_variables()
+        for variable, value in variables.items():
+            logging.info("%s = %s", variable, value)
