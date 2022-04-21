@@ -185,6 +185,8 @@ class Scrapper:
                 # self.browser.execute_javascript("document.querySelector"
                 #                                 "(\"button[data-testid='search-show-more-button']\")"
                 #                                 ".click()")
+                v = self.browser.get_webelement(locator=paging_button)
+                print(v)
                 self.browser.click_element(locator=paging_button)
                 print("Click")
             except Exception as e:
