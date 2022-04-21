@@ -173,7 +173,7 @@ class Scrapper:
         try:
             while self.browser.does_page_contain_button(locator=paging_button):
                 self.browser.scroll_element_into_view(locator=paging_button)
-                self.browser.click_element_if_visible(locator=paging_button)
+                self.browser.click_button(locator=paging_button)
         except Exception as e:
             print(type(e))
             print(str(e))
