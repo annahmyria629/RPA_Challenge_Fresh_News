@@ -6,7 +6,9 @@ tasks:
 
 condaConfigFile: conda.yaml
 
-artifactsDir: .
+artifactsDir:
+  - output
+  - output/images
 PATH:
   - .
 PYTHONPATH:
