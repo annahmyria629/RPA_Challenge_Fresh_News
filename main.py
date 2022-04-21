@@ -171,15 +171,17 @@ class Scrapper:
         print("Start of getting results")
         result_data = []
         paging_button = "//button[@data-testid='search-show-more-button']"
-        try:
-            while self.browser.does_page_contain_button(locator=paging_button):
+        while True:
+            try:
+                self.browser.scroll_element_into_view(locator=paging_button)
                 self.browser.wait_until_element_is_visible(locator=paging_button,
                                                            error="Show more button is not visible")
                 self.browser.click_button(locator=paging_button)
                 print("Click")
-        except Exception as e:
-            print(type(e))
-            print(str(e))
+            except Exception as e:
+                print(type(e))
+                print(str(e))
+                break
 
         self.browser.set_selenium_implicit_wait(value=timedelta(seconds=10))
         res_count = len(self.browser.get_webelements(locator="//ol[@data-testid='search-results']/li["
@@ -254,12 +256,7 @@ if __name__ == '__main__':
     g_number_of_months = int(g_number_of_months)
 
     output_folder = Utils.create_folder(pathlib.Path(__file__).parent.resolve(), "output")
-
     images_folder = Utils.create_folder(output_folder, "images")
-
-    p = pathlib.Path(pathlib.Path(__file__).parent).glob('**/*')
-    files = [x for x in p]
-    print(files)
 
     browser = Scrapper()
     browser.open_browser(g_url)
