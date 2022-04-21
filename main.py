@@ -175,10 +175,13 @@ class Scrapper:
         while True:
             try:
                 self.browser.scroll_element_into_view(locator=paging_button)
+                print("Scrolled into")
                 self.browser.wait_until_element_is_visible(locator=paging_button,
                                                            error="Show more button is not visible")
+                print("Visible")
                 self.browser.set_selenium_implicit_wait(value=timedelta(seconds=2))
-                self.browser.click_button_when_visible(locator=paging_button)
+                print("Wait")
+                self.browser.click_element_if_visible(locator=paging_button)
                 print("Click")
             except Exception as e:
                 print(type(e))
