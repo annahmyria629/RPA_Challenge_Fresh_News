@@ -224,12 +224,26 @@ class Scrapper:
 
 
 if __name__ == '__main__':
-    g_search_phrase = "Biden"
-    g_number_of_months = 1
-    g_category_section = "Article"
+    # g_search_phrase = "Biden"
+    # g_number_of_months = "1"
+    # g_category_section = "Article"
     g_url = "https://www.nytimes.com"
-    Utils.get_input_vars()
-    p = pathlib.Path(pathlib.Path(__file__).parent).glob('**/*')
+    input_vars = Utils.get_input_vars()
+    g_search_phrase = input_vars.get("g_search_phrase", "")
+    g_number_of_months = input_vars.get("g_number_of_months", "")
+    g_category_section = input_vars.get("g_category_section", "")
+    exc = []
+    if not g_search_phrase:
+        exc.append("Search phrase is empty")
+    elif not g_number_of_months:
+        exc.append("Search period is empty")
+    elif not g_category_section:
+        exc.append("Search category/section is empty")
+
+    if exc:
+        raise AssertionError(",".join(exc))
+
+    g_number_of_months = int(g_number_of_months)
 
     folder = pathlib.Path(pathlib.Path(__file__).parent.resolve()).joinpath("images")
     if folder.exists():
