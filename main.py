@@ -186,7 +186,7 @@ class Scrapper:
                 v = self.browser.get_webelement(locator=paging_button)
                 print(v.tag_name)
                 a = "css:button[data-testid='search-show-more-button']"
-                self.browser.click_element(locator=a)
+                self.browser.click_element(locator=paging_button)
                 # self.browser.execute_javascript("document.querySelector(\"button[data-testid"
                 #                                 "='search-show-more-button']\").click()")
                 print("Click")
