@@ -171,8 +171,7 @@ class Scrapper:
     def get_results(self, search_phrase: str, folder_to_save_images: str) -> typing.List:
         print("Start of getting results")
         result_data = []
-        # paging_button = "//button[@data-testid='search-show-more-button']"
-        paging_button = "//*[@text='Show More']"
+        paging_button = "//button[@data-testid='search-show-more-button'][1]"
         while True:
             try:
                 self.browser.scroll_element_into_view(locator=paging_button)
