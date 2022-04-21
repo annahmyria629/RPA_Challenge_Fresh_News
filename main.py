@@ -172,7 +172,7 @@ class Scrapper:
         print("Start of getting results")
         result_data = []
         paging_button = "//button[@data-testid='search-show-more-button']"
-        while self.browser.does_page_contain_button(paging_button):
+        while self.browser.does_page_contain_button(locator=paging_button):
             try:
                 self.browser.scroll_element_into_view(locator=paging_button)
                 print("Scrolled into")
@@ -181,10 +181,11 @@ class Scrapper:
                 print("Visible")
                 self.browser.set_selenium_implicit_wait(value=timedelta(seconds=2))
                 print("Wait")
-                # self.browser.click_element_if_visible(locator=paging_button)
-                self.browser.execute_javascript("document.querySelector"
-                                                "(\"button[data-testid='search-show-more-button']\")"
-                                                ".click()")
+                print(self.browser.does_page_contain_button(locator=paging_button))
+                # self.browser.execute_javascript("document.querySelector"
+                #                                 "(\"button[data-testid='search-show-more-button']\")"
+                #                                 ".click()")
+                self.browser.click_element(locator=paging_button)
                 print("Click")
             except Exception as e:
                 print(type(e))
@@ -241,25 +242,25 @@ class Scrapper:
 
 
 if __name__ == '__main__':
-    g_search_phrase = "Biden"
-    g_number_of_months = "1"
-    g_category_section = "Article"
+    # g_search_phrase = "Biden"
+    # g_number_of_months = "1"
+    # g_category_section = "Article"
     header = ["date", "title", "description", "image_filename", "phrase_occurrence", "money_value_occurrence"]
     g_url = "https://www.nytimes.com"
-    # input_vars = Utils.get_input_vars()
-    # g_search_phrase = input_vars.get("g_search_phrase", "")
-    # g_number_of_months = input_vars.get("g_number_of_months", "")
-    # g_category_section = input_vars.get("g_category_section", "")
-    # exc = []
-    # if not g_search_phrase:
-    #     exc.append("Search phrase is empty")
-    # elif not g_number_of_months:
-    #     exc.append("Search period is empty")
-    # elif not g_category_section:
-    #     exc.append("Search category/section is empty")
-    #
-    # if exc:
-    #     raise AssertionError(",".join(exc))
+    input_vars = Utils.get_input_vars()
+    g_search_phrase = input_vars.get("g_search_phrase", "")
+    g_number_of_months = input_vars.get("g_number_of_months", "")
+    g_category_section = input_vars.get("g_category_section", "")
+    exc = []
+    if not g_search_phrase:
+        exc.append("Search phrase is empty")
+    elif not g_number_of_months:
+        exc.append("Search period is empty")
+    elif not g_category_section:
+        exc.append("Search category/section is empty")
+
+    if exc:
+        raise AssertionError(",".join(exc))
 
     g_number_of_months = int(g_number_of_months)
 
