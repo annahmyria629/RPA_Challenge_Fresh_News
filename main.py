@@ -179,7 +179,7 @@ class Scrapper:
                 self.browser.wait_until_element_is_visible(locator=paging_button,
                                                            error="Show more button is not visible")
                 print("Visible")
-                self.browser.set_selenium_implicit_wait(value=timedelta(seconds=2))
+                self.browser.wait_until_page_contains_element(locator=paging_button)
                 print("Wait")
                 print(self.browser.does_page_contain_button(locator=paging_button))
                 # self.browser.execute_javascript("document.querySelector"
