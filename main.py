@@ -3,9 +3,8 @@ from datetime import timedelta, datetime
 import selenium.common.exceptions as s
 import SeleniumLibrary.errors as se
 from utils import Utils
-import pathlib
-from shutil import rmtree
 import typing
+import pathlib
 
 
 class Scrapper:
@@ -250,13 +249,9 @@ if __name__ == '__main__':
 
     g_number_of_months = int(g_number_of_months)
 
-    folder = pathlib.Path(pathlib.Path(__file__).parent.resolve()).joinpath("images")
-    if folder.exists():
-        rmtree(folder.absolute(), ignore_errors=True)
-    pathlib.Path(folder).mkdir(exist_ok=True)
-    folder_was_created = pathlib.Path(folder).exists()
-    if not folder_was_created:
-        folder = pathlib.Path(pathlib.Path(__file__))
+    output_folder = Utils.create_folder(pathlib.Path(__file__).parent.resolve(), "output")
+    images_folder = Utils.create_folder(output_folder, "images")
+
     browser = Scrapper()
     browser.open_browser(g_url)
     try:
@@ -265,8 +260,8 @@ if __name__ == '__main__':
         browser.set_news_section(g_category_section)
         browser.set_news_category(g_category_section)
         browser.sort_news_by_newest()
-        results = browser.get_results(g_search_phrase, str(folder))
-        Utils.write_result_to_file(results, header)
+        results = browser.get_results(g_search_phrase, images_folder)
+        Utils.write_result_to_file(pathlib.Path(output_folder).joinpath("result.csv"), results, header)
         print("End")
     except (se.ElementNotFound, AssertionError) as e:
         print(str(e))

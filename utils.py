@@ -3,7 +3,8 @@ import csv
 import re
 import pathlib
 from RPA.Robocorp.WorkItems import WorkItems
-import logging
+from shutil import rmtree
+import pathlib
 
 
 class Utils:
@@ -23,13 +24,12 @@ class Utils:
                 handle.write(block)
 
     @staticmethod
-    def write_result_to_file(data, headers):
-        with open('result.csv', 'w', encoding='UTF8') as f:
+    def write_result_to_file(path_to_csv, data, headers):
+        with open(path_to_csv, "w", encoding='UTF8') as f:
             writer = csv.writer(f)
             writer.writerow(headers)
             for item in data:
                 writer.writerow(item)
-            Utils.create_output_work_item(f.name)
 
     @staticmethod
     def get_image_name(src):
@@ -56,7 +56,12 @@ class Utils:
         return variables
 
     @staticmethod
-    def create_output_work_item(output):
-        item = WorkItems()
-        input_item = item.get_input_work_item()
-        output_item = item.create_output_work_item(files=output, save=True)
+    def create_folder(parent_folder, folder_name):
+        folder = pathlib.Path(parent_folder).joinpath(folder_name)
+        if folder.exists():
+            rmtree(folder.absolute(), ignore_errors=True)
+        pathlib.Path(folder).mkdir(exist_ok=True)
+        folder_was_created = pathlib.Path(folder).exists()
+        if not folder_was_created:
+            folder = pathlib.Path(pathlib.Path(parent_folder))
+        return folder.name
