@@ -11,17 +11,20 @@ class Utils:
     @staticmethod
     def save_image(image_src, image_filename, folder_to_save):
         path_to_saved_image = str(pathlib.Path(folder_to_save).joinpath(image_filename).resolve())
-        with open(str(path_to_saved_image), 'wb') as handle:
-            response = requests.get(image_src, stream=True)
+        try:
+            with open(str(path_to_saved_image), 'wb') as handle:
+                response = requests.get(image_src, stream=True)
 
-            if not response.ok:
-                print(response)
+                if not response.ok:
+                    print(response)
 
-            for block in response.iter_content(1024):
-                if not block:
-                    break
+                for block in response.iter_content(1024):
+                    if not block:
+                        break
 
-                handle.write(block)
+                    handle.write(block)
+        except OSError as e:
+            print("Unable to save image")
 
     @staticmethod
     def write_result_to_file(path_to_csv, data, headers):
