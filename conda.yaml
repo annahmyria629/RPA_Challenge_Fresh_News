@@ -48,9 +48,6 @@ dependencies:
       - pycparser==2.21
       - Pygments==2.11.2
       - pynput-robocorp-fork==4.0.0
-      - pyobjc-core==7.3
-      - pyobjc-framework-Cocoa==7.3
-      - pyobjc-framework-Quartz==7.3
       - PyPDF2==1.27.2
       - pyperclip==1.8.2
       - pyrsistent==0.18.1
