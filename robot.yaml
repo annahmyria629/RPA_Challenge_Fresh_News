@@ -1,8 +1,11 @@
 tasks:
   Run Python:
-    shell: python main.py
+    command:
+      - python
+      - main.py
 
-#condaConfigFile: conda.yaml
+condaConfigFile: conda.yaml
+
 artifactsDir: output
 PATH:
   - .
