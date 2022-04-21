@@ -172,7 +172,7 @@ class Scrapper:
         print("Start of getting results")
         result_data = []
         paging_button = "//button[@data-testid='search-show-more-button']"
-        while True:
+        while self.browser.does_page_contain_button(paging_button):
             try:
                 self.browser.scroll_element_into_view(locator=paging_button)
                 print("Scrolled into")
