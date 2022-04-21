@@ -187,7 +187,7 @@ class Scrapper:
                 #                                 ".click()")
                 v = self.browser.get_webelement(locator=paging_button)
                 print(v.tag_name)
-                self.browser.click_element(locator=paging_button)
+                self.browser.click_element_if_visible(locator=paging_button)
                 print("Click")
             except Exception as e:
                 print(type(e))
