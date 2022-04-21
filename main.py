@@ -171,8 +171,13 @@ class Scrapper:
     def get_results(self, search_phrase: str, folder_to_save_images: str) -> typing.List:
         result_data = []
         paging_button = "//button[@data-testid='search-show-more-button']"
-        while self.browser.does_page_contain_button(locator=paging_button):
-            self.browser.click_element_if_visible(locator=paging_button)
+        try:
+            while self.browser.does_page_contain_button(locator=paging_button):
+                self.browser.click_element_if_visible(locator=paging_button)
+        except Exception as e:
+            print(type(e))
+            print(str(e))
+
 
         self.browser.set_selenium_implicit_wait(value=timedelta(seconds=10))
         res_count = len(self.browser.get_webelements(locator="//ol[@data-testid='search-results']/li["
