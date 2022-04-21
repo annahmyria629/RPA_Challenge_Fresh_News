@@ -65,4 +65,4 @@ class Utils:
         folder_was_created = pathlib.Path(folder).exists()
         if not folder_was_created:
             folder = pathlib.Path(pathlib.Path(parent_folder))
-        return folder.name
+        return str(folder)
