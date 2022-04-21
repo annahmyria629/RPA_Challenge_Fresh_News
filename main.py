@@ -230,8 +230,7 @@ if __name__ == '__main__':
     g_url = "https://www.nytimes.com"
     Utils.get_input_vars()
     p = pathlib.Path(pathlib.Path(__file__).parent).glob('**/*')
-    files = [x for x in p if x.is_file()]
-    print(files)
+
     folder = pathlib.Path(pathlib.Path(__file__).parent.resolve()).joinpath("images")
     if folder.exists():
         rmtree(folder.absolute(), ignore_errors=True)

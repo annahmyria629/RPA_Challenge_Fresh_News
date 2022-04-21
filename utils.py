@@ -53,4 +53,4 @@ class Utils:
         items.get_input_work_item()
         variables = items.get_work_item_variables()
         for variable, value in variables.items():
-            logging.info("%s = %s", variable, value)
+            print(f"{variable} = {value}")
