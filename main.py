@@ -16,7 +16,8 @@ class Scrapper:
 
     def open_browser(self, url: str) -> None:
         try:
-            self.browser.open_available_browser(url)
+            # self.browser.open_available_browser(url)
+            self.browser.open_headless_chrome_browser(url)
             # self.browser.open_browser(url=url, browser="safari")
             self.browser.maximize_browser_window()
         except Exception:
@@ -176,6 +177,7 @@ class Scrapper:
                 self.browser.scroll_element_into_view(locator=paging_button)
                 self.browser.wait_until_element_is_visible(locator=paging_button,
                                                            error="Show more button is not visible")
+                self.browser.set_selenium_implicit_wait(value=timedelta(seconds=2))
                 self.browser.click_button_when_visible(locator=paging_button)
                 print("Click")
             except Exception as e:
@@ -233,25 +235,25 @@ class Scrapper:
 
 
 if __name__ == '__main__':
-    # g_search_phrase = "Biden"
-    # g_number_of_months = "1"
-    # g_category_section = "Article"
+    g_search_phrase = "Biden"
+    g_number_of_months = "1"
+    g_category_section = "Article"
     header = ["date", "title", "description", "image_filename", "phrase_occurrence", "money_value_occurrence"]
     g_url = "https://www.nytimes.com"
-    input_vars = Utils.get_input_vars()
-    g_search_phrase = input_vars.get("g_search_phrase", "")
-    g_number_of_months = input_vars.get("g_number_of_months", "")
-    g_category_section = input_vars.get("g_category_section", "")
-    exc = []
-    if not g_search_phrase:
-        exc.append("Search phrase is empty")
-    elif not g_number_of_months:
-        exc.append("Search period is empty")
-    elif not g_category_section:
-        exc.append("Search category/section is empty")
-
-    if exc:
-        raise AssertionError(",".join(exc))
+    # input_vars = Utils.get_input_vars()
+    # g_search_phrase = input_vars.get("g_search_phrase", "")
+    # g_number_of_months = input_vars.get("g_number_of_months", "")
+    # g_category_section = input_vars.get("g_category_section", "")
+    # exc = []
+    # if not g_search_phrase:
+    #     exc.append("Search phrase is empty")
+    # elif not g_number_of_months:
+    #     exc.append("Search period is empty")
+    # elif not g_category_section:
+    #     exc.append("Search category/section is empty")
+    #
+    # if exc:
+    #     raise AssertionError(",".join(exc))
 
     g_number_of_months = int(g_number_of_months)
 
