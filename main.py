@@ -172,8 +172,8 @@ class Scrapper:
         print("Start of getting results")
         result_data = []
         paging_button = "//button[@data-testid='search-show-more-button']"
-        while self.browser.does_page_contain_button(locator=paging_button):
-            try:
+        try:
+            while self.browser.does_page_contain_button(locator=paging_button):
                 self.browser.scroll_element_into_view(locator=paging_button)
                 print("Scrolled into")
                 self.browser.wait_until_element_is_visible(locator=paging_button,
@@ -186,12 +186,15 @@ class Scrapper:
                 v = self.browser.get_webelement(locator=paging_button)
                 print(v.tag_name)
                 a = "css:button[data-testid='search-show-more-button']"
-                self.browser.click_element(locator=paging_button)
+                try:
+                    self.browser.click_element(locator=paging_button)
+                except s.ElementClickInterceptedException as e:
+                    self.browser.click_element(locator=paging_button)
                 # self.browser.execute_javascript("document.querySelector(\"button[data-testid"
                 #                                 "='search-show-more-button']\").click()")
                 print("Click")
-            except s.ElementClickInterceptedException as e:
-                pass
+        except s.ElementClickInterceptedException as e:
+            pass
 
         self.browser.set_selenium_implicit_wait(value=timedelta(seconds=10))
         res_count = len(self.browser.get_webelements(locator="//ol[@data-testid='search-results']/li["
