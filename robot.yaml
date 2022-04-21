@@ -4,7 +4,7 @@ tasks:
       - python3
       - main.py
 
-#condaConfigFile: conda.yaml
+condaConfigFile: conda.yaml
 
 artifactsDir: output
 PATH:
