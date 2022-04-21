@@ -11,6 +11,7 @@ class Utils:
     @staticmethod
     def save_image(image_src, image_filename, folder_to_save):
         path_to_saved_image = str(pathlib.Path(folder_to_save).joinpath(image_filename).resolve())
+        print(path_to_saved_image)
         with open(str(path_to_saved_image), 'wb') as handle:
             response = requests.get(image_src, stream=True)
 
