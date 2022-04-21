@@ -190,10 +190,8 @@ class Scrapper:
                 # self.browser.execute_javascript("document.querySelector(\"button[data-testid"
                 #                                 "='search-show-more-button']\").click()")
                 print("Click")
-            except Exception as e:
-                print(type(e))
-                print(str(e))
-                break
+            except s.ElementClickInterceptedException as e:
+                pass
 
         self.browser.set_selenium_implicit_wait(value=timedelta(seconds=10))
         res_count = len(self.browser.get_webelements(locator="//ol[@data-testid='search-results']/li["
