@@ -182,6 +182,7 @@ class Scrapper:
                 self.browser.wait_until_page_contains_element(locator=paging_button)
                 print("Wait")
                 print(self.browser.does_page_contain_button(locator=paging_button))
+                print(self.browser.is_element_visible(locator=paging_button))
                 # self.browser.execute_javascript("document.querySelector"
                 #                                 "(\"button[data-testid='search-show-more-button']\")"
                 #                                 ".click()")
