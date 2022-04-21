@@ -171,7 +171,7 @@ class Scrapper:
     def get_results(self, search_phrase: str, folder_to_save_images: str) -> typing.List:
         print("Start of getting results")
         result_data = []
-        paging_button = "//button[@data-testid='search-show-more-button'][0]"
+        paging_button = "//button[@data-testid='search-show-more-button']"
         while True:
             try:
                 self.browser.scroll_element_into_view(locator=paging_button)
@@ -181,8 +181,10 @@ class Scrapper:
                 print("Visible")
                 self.browser.set_selenium_implicit_wait(value=timedelta(seconds=2))
                 print("Wait")
-                self.browser.click_element_if_visible(locator=paging_button)
-
+                # self.browser.click_element_if_visible(locator=paging_button)
+                self.browser.execute_javascript("document.querySelector"
+                                                "(\"button[data-testid='search-show-more-button']\")"
+                                                ".click()")
                 print("Click")
             except Exception as e:
                 print(type(e))
