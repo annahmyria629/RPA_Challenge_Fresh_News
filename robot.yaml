@@ -9,6 +9,7 @@ condaConfigFile: conda.yaml
 artifactsDir:
   - output
   - output/images
+
 PATH:
   - .
 PYTHONPATH:
