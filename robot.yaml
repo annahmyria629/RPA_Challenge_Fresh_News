@@ -1,7 +1,7 @@
 tasks:
   Run Python:
     command:
-      - python
+      - python3
       - main.py
 
 condaConfigFile: conda.yaml
